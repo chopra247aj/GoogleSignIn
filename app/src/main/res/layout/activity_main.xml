@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Sign In methods"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/googleSignInButton2"
+        android:text="Sign In"
+        android:backgroundTint="#FFD600"
+        android:drawableStart="@drawable/google"
+        android:drawablePadding="10dp"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/googleSignInButton"/>
+
+
+
+</LinearLayout>
