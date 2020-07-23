@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Please login", Toast.LENGTH_SHORT).show();
         }else{
             Intent intent = new Intent(MainActivity.this,MainActivity2.class);
-            //intent.putExtra("googlesigninclient", (Parcelable) mGoogleSignInClient);
+
             startActivity(intent);
             finish();
         }
