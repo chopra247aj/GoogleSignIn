@@ -18,6 +18,9 @@ import android.os.Parcelable;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -56,6 +59,9 @@ import java.util.Arrays;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class MainActivity extends AppCompatActivity {
+    EditText mail,pass;
+    Button login;
+    TextView textView;
     SignInButton signInButton;
     private FirebaseAuth mAuth;
     LoginButton loginButton;
@@ -73,6 +79,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mail=findViewById(R.id.editName);
+        pass=findViewById(R.id.editPass);
+        textView=findViewById(R.id.textView4);
+        login=findViewById(R.id.login2);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isEmpty();
+            }
+        });
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Intent intent=new Intent(MainActivity.this,Register.class);
+            startActivity(intent);
+            }
+        });
+
         signInButton=findViewById(R.id.googleSignInButton);
         loginButton=findViewById(R.id.login_button);
          mAuth = FirebaseAuth.getInstance();
@@ -273,5 +297,42 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    public void isEmpty(){
+        String email,password;
+        password=pass.getText().toString();
+        email=mail.getText().toString();
+        if(password.isEmpty()|| email.isEmpty()){
+            Toast.makeText(this, "Both fields are compulsory to be filled", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        login(email,password);
+    }
+    private  void login(String email,String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(MainActivity.this, " Login Successfully", Toast.LENGTH_SHORT).show();
+                            updateUI(user);
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+
+
 
 }
