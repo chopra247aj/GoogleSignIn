@@ -51,13 +51,15 @@ public class MainActivity2 extends AppCompatActivity {
     List<Address> addresses;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         adress=findViewById(R.id.textView2);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         name=findViewById(R.id.name1);
         mail=findViewById(R.id.mail1);
+        super.onCreate(savedInstanceState);
         lname=findViewById(R.id.lname1);
         if(isFacebookLoggedIn()){
             AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -69,7 +71,7 @@ public class MainActivity2 extends AppCompatActivity {
                         String first_name = object.getString("first_name");
                         String last_name = object.getString("last_name");
                         String email = object.getString("email");
-                        
+
 
                         mail.setText("Email: "+email);
                         name.setText("Name: "+first_name );
@@ -89,13 +91,19 @@ public class MainActivity2 extends AppCompatActivity {
             request.setParameters(parameters);
             request.executeAsync();
 
-        }else {
-            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        }else if(acct!=null) {
+
             name.setText("Name: "+acct.getDisplayName());
             mail.setText("Email: "+acct.getEmail());
             lname.setText("Last Name: "+acct.getFamilyName());
 
 
+        }
+        else{
+            name.setText("Name: Username");
+
+            mail.setText("Email: mailid");
+            lname.setText("Last Name: lastname");
         }
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
