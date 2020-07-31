@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -49,6 +50,7 @@ public class MainActivity2 extends AppCompatActivity {
     boolean isNetworkEnable = false;
     Geocoder geocoder;
     List<Address> addresses;
+    AccessToken accessToken;
 
 
 
@@ -61,8 +63,9 @@ public class MainActivity2 extends AppCompatActivity {
         mail=findViewById(R.id.mail1);
         super.onCreate(savedInstanceState);
         lname=findViewById(R.id.lname1);
+
         if(isFacebookLoggedIn()){
-            AccessToken accessToken = AccessToken.getCurrentAccessToken();
+             accessToken = AccessToken.getCurrentAccessToken();
             GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
                 @Override
                 public void onCompleted(JSONObject object, GraphResponse response)
@@ -125,6 +128,8 @@ public class MainActivity2 extends AppCompatActivity {
                 gcv.revokeAccess();
                 if(isFacebookLoggedIn()){
                     LoginManager.getInstance().logOut();
+                    LoginManager.getInstance().reauthorizeDataAccess(this);
+
                 }
 
                 Intent intent = new Intent(MainActivity2.this,MainActivity.class);
@@ -139,7 +144,7 @@ public class MainActivity2 extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private boolean isFacebookLoggedIn(){
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+         accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         return isLoggedIn;
     }
