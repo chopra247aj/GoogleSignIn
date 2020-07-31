@@ -12,10 +12,49 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="377dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="334dp"
         android:gravity="center"
         android:text="Address"
         android:textSize="20dp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/name1"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="633dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/lname1"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="547dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/mail1"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="426dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="TextView" />
 </RelativeLayout>

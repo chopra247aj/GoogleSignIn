@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,13 +33,16 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity2 extends AppCompatActivity {
-    TextView adress;
+    TextView adress,name,mail,lname;
     public LocationManager locationManager;
     public LocationListener locationListener = new MyLocationListener();
     boolean isGpsEnable = false;
@@ -45,11 +50,54 @@ public class MainActivity2 extends AppCompatActivity {
     Geocoder geocoder;
     List<Address> addresses;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         adress=findViewById(R.id.textView2);
+        name=findViewById(R.id.name1);
+        mail=findViewById(R.id.mail1);
+        lname=findViewById(R.id.lname1);
+        if(isFacebookLoggedIn()){
+            AccessToken accessToken = AccessToken.getCurrentAccessToken();
+            GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response)
+                {
+                    try {
+                        String first_name = object.getString("first_name");
+                        String last_name = object.getString("last_name");
+                        String email = object.getString("email");
+                        
+
+                        mail.setText("Email: "+email);
+                        name.setText("Name: "+first_name );
+                        lname.setText("LastName: "+last_name);
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+            Bundle parameters = new Bundle();
+            parameters.putString("fields","first_name,last_name,email,id");
+            request.setParameters(parameters);
+            request.executeAsync();
+
+        }else {
+            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+            name.setText("Name: "+acct.getDisplayName());
+            mail.setText("Email: "+acct.getEmail());
+            lname.setText("Last Name: "+acct.getFamilyName());
+
+
+        }
+
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         getMyLocation();
 

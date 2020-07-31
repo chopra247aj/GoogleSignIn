@@ -104,7 +104,7 @@ public class Register extends AppCompatActivity {
             Toast.makeText(this, "Every Field is compulsory", Toast.LENGTH_SHORT).show();
             return;
         }
-        Map<String, Object> user = new HashMap<>();
+        Map<String, String> user = new HashMap<>();
         user.put("Name", name);
         user.put("Email", mail);
         user.put("Age", age);
